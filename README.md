@@ -1,5 +1,6 @@
 # discord-ranked-system
 Easy To Use!
+
 ft. @Mihael326
 
 **Links:**
