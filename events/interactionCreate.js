@@ -16,7 +16,7 @@ module.exports = {
             if (!data) await User.create({ guildId: interaction.guild.id, userId: interaction.member.id })
             // let newdata = await User.findOne({ guildId: message.guild.id, userId: message.user.id })
             await User.updateOne({ guildId: interaction.guild.id, userId: interaction.member.id }, {
-                $inc: { "ranked.xp": +10 }
+                $inc: { "ranked.xp": +100 }
             })
             let newdata = await User.findOne({ guildId: interaction.guild.id, userId: interaction.member.id })
             if (newdata?.ranked?.xp >= 10000) {

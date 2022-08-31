@@ -7,6 +7,7 @@ module.exports = {
         .setName('rank')
         .setDescription("Shows ur rank 📥").addUserOption(o => o.setName("user").setDescription("View another user's level 📥")),
     async execute(client, interaction) {
+        await interaction.deferReply().catch(() => null)
         let guild_data = await Guild.findOne({ guildId: interaction.guild.id })
         if(!guild_data) await Guild.create({ guildId: interaction.guild.id })
         let newguild_data = await Guild.findOne({ guildId: interaction.guild.id })
@@ -25,15 +26,14 @@ module.exports = {
             .setStatus(member.presence?.status || "offline")
             .setProgressBar("#FFFFFF", "COLOR")
             .setLevel(typeof data?.ranked?.level === "object" ? 0 : data?.ranked?.level)
-            .setRank(typeof data?.ranked?.level === "object" ? 0 : data?.ranked?.level)
             .setUsername(`${target.username}`)
             .setDiscriminator(`${target.discriminator}`)
             .setBackground("IMAGE", background);
 
         rank.build()
-            .then(data => {
+            .then(async data => {
                 const attachment = new AttachmentBuilder(data, "RankCard.png");
-                interaction.reply({ files: [attachment] })
+                await interaction.editReply({ files: [attachment] })
             })
     }
 }
